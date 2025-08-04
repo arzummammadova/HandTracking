@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jest ilə İdarə Edilən Səhifə</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            scroll-behavior: smooth;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+        }
+
+        .navbar a {
+            margin: 0 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #555;
+        }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 5% 50px;
+            color: #333;
+            transition: background-color 0.6s ease-in-out;
+        }
+
+        section h2 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #222;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        #home { background-color: #fff; }
+        #about { background-color: #f8f8f8; }
+        #services { background-color: #fff; }
+        #portfolio { background-color: #f0f0f0; }
+        #contact { background-color: #fff; }
+
+        /* Video & Canvas */
+        video, canvas {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            height: 240px;
+            border-radius: 16px;
+            z-index: 999;
+            border: 3px solid #ccc;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: scaleX(-1);
+        }
+
+        /* Instructions */
+        .instructions {
+            position: fixed;
+            top: 280px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 999;
+            width: 320px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #555;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .instructions strong {
+            color: #000;
+        }
+
+        /* Service Cards */
+        .service-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            width: 300px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #222;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+            width: 80%;
+            max-width: 1000px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .carousel-item a {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            display: block;
+        }
+        
+        .carousel-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            width: 100%;
+            background: #222;
+            color: #f8f8f8;
+            text-align: center;
+            padding: 2rem;
+            font-size: 1rem;
+        }
+
+        .social-icons a {
+            color: #f8f8f8;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#home">Ana Səhifə</a>
+        <a href="#about">Haqqımızda</a>
+        <a href="#services">Xidmətlər</a>
+        <a href="#portfolio">Portfel</a>
+        <a href="#contact">Əlaqə</a>
+    </nav>
+
+    <video id="webcam" autoplay playsinline></video>
+    <canvas id="outputCanvas" width="320" height="240"></canvas>
+    
+    <div class="instructions">
+        👋 **Jestlə səhifəni idarə et:**<br>
+        Kameraya **5 barmağını** göstər.<br>
+        <strong>Skroll aşağı:</strong> Şəhadət barmağını aşağı hərəkət etdir.<br>
+        <strong>Skroll yuxarı:</strong> Şəhadət barmağını yuxarı hərəkət etdir.<br>
+        <strong>Karusel sola:</strong> Şəhadət barmağını sola hərəkət etdir.<br>
+        <strong>Karusel sağa:</strong> Şəhadət barmağını sağa hərəkət etdir.<br>
+        <strong>Jestləri dayandır:</strong> Əlini yumruq şəklində bağla.
+    </div>
+
+    <section id="home">
+        <h2>Jest ilə Veb-sayt İdarəetmə</h2>
+        <p>Rəqəmsal dünyanı jestlərin gücü ilə kəşf edin. Bu səhifə jest tanıma texnologiyası ilə idarə olunur.</p>
+    </section>
+
+    <section id="about">
+        <h2>Layihə Haqqında</h2>
+        <p>Bu layihə, MediaPipe Hands kitabxanasından istifadə edərək jestləri tanıyır və veb-səhifəni idarə etməyə imkan verir. Şəhadət barmağının hərəkəti real zamanda izlənilir və səhifənin idarə olunması üçün istifadə olunur.</p>
+    </section>
+
+    <section id="services">
+        <h2>Xidmətlərimiz</h2>
+        <div class="service-cards">
+            <div class="service-card">
+                <i class="fas fa-desktop"></i>
+                <h3>Veb Dizayn</h3>
+                <p>Göz oxşayan və istifadəçi dostu veb-saytların yaradılması.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Mobil Tətbiq</h3>
+                <p>iOS və Android üçün innovativ mobil tətbiqlərin hazırlanması.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Rəqəmsal Marketinq</h3>
+                <p>Brendinizin onlayn görünürlüyünü artırmaq üçün strategiyalar.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <h2>Portfelimiz</h2>
+        <p>Jestlə idarə olunan karuseldə son işlərimizə nəzər yetirin.</p>
+        <div class="carousel-container">
+            <div class="carousel-inner" id="carousel-inner">
+                </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Əlaqə</h2>
+        <p>Bizimlə əlaqə qurmaq üçün aşağıdakı məlumatlardan istifadə edə bilərsiniz. Hər hansı bir sualınız varsa, bizə yazın!</p>
+    </section>
+    
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p>© 2025 Jestlə İdarə. Bütün hüquqlar qorunur.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+
+    <script>
+        const videoElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('outputCanvas');
+        const canvasCtx = canvasElement.getContext('2d');
+        const carouselInner = document.getElementById('carousel-inner');
+        const navLinks = document.querySelectorAll('.navbar a');
+
+        let lastIndexFingerPosition = { x: null, y: null };
+        let lastGestureTime = 0;
+        let carouselIndex = 0;
+        let isStopped = false;
+
+        const scrollSpeedFactor = 40; // Sürət artırıldı
+        const gestureCooldown = 500;
+        const scrollGestureThreshold = 0.005;
+        const carouselGestureThreshold = 0.05;
+        const handClosedThreshold = 0.08;
+
+        const imageCount = 5;
+        const redirectUrls = [
+            'https://www.google.com',
+            'https://www.github.com',
+            'https://www.wikipedia.org',
+            'https://www.youtube.com',
+            'https://www.linkedin.com'
+        ];
+
+        function populateCarousel() {
+            carouselInner.innerHTML = '';
+            for (let i = 0; i < imageCount; i++) {
+                const carouselItem = document.createElement('div');
+                carouselItem.className = 'carousel-item';
+
+                // Şəkli link etiketi (<a>) ilə bükürük
+                const link = document.createElement('a');
+                link.href = redirectUrls[i];
+                link.target = "_blank"; // Yeni səhifədə açılmasını təmin edir
+
+                const img = document.createElement('img');
+                img.src = `https://picsum.photos/seed/${Math.random()}/1200/600`;
+                img.alt = `Layihə ${i + 1}`;
+
+                const caption = document.createElement('div');
+                caption.className = 'carousel-caption';
+                caption.innerHTML = `<h3>Layihə ${i + 1}</h3>`;
+
+                link.appendChild(img);
+                link.appendChild(caption);
+                carouselItem.appendChild(link);
+                carouselInner.appendChild(carouselItem);
+            }
+        }
+        populateCarousel();
+
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        
+        const hands = new Hands({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
+        });
+
+        hands.setOptions({
+            maxNumHands: 1,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.8,
+            minTrackingConfidence: 0.6,
+        });
+
+        hands.onResults(onResults);
+
+        const camera = new Camera(videoElement, {
+            onFrame: async () => {
+                await hands.send({ image: videoElement });
+            },
+            width: 320,
+            height: 240,
+        });
+        camera.start();
+
+        function isClosedHand(landmarks) {
+            const indexTip = landmarks[8];
+            const indexMCP = landmarks[5];
+            const pinkyTip = landmarks[20];
+            const pinkyMCP = landmarks[17];
+
+            const indexIsClosed = indexTip.y > indexMCP.y + handClosedThreshold;
+            const pinkyIsClosed = pinkyTip.y > pinkyMCP.y + handClosedThreshold;
+
+            return indexIsClosed && pinkyIsClosed;
+        }
+
+        function onResults(results) {
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                const landmarks = results.multiHandLandmarks[0];
+                drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, { color: "#555" });
+                drawLandmarks(canvasCtx, landmarks, { color: "#222", lineWidth: 2 });
+
+                const currentTime = Date.now();
+                const isHandClosed = isClosedHand(landmarks);
+
+                if (isHandClosed) {
+                    isStopped = true;
+                    lastIndexFingerPosition = { x: null, y: null };
+                    return;
+                } else {
+                    isStopped = false;
+                }
+
+                if (!isStopped) {
+                    const indexFingerTip = landmarks[8];
+
+                    if (lastIndexFingerPosition.x !== null && currentTime - lastGestureTime > 100) {
+                        const diffY = indexFingerTip.y - lastIndexFingerPosition.y;
+                        const diffX = indexFingerTip.x - lastIndexFingerPosition.x;
+
+                        if (Math.abs(diffY) > scrollGestureThreshold && Math.abs(diffY) > Math.abs(diffX)) {
+                            const scrollAmount = diffY * canvasElement.height * scrollSpeedFactor;
+                            window.scrollBy(0, scrollAmount);
+                            lastGestureTime = currentTime;
+                        }
+                        
+                        if (Math.abs(diffX) > carouselGestureThreshold && Math.abs(diffX) > Math.abs(diffY) && currentTime - lastGestureTime > gestureCooldown) {
+                            if (diffX > 0) {
+                                prevSlide();
+                            } else {
+                                nextSlide();
+                            }
+                            lastGestureTime = currentTime;
+                        }
+                    }
+
+                    lastIndexFingerPosition = { x: indexFingerTip.x, y: indexFingerTip.y };
+                }
+            } else {
+                lastIndexFingerPosition = { x: null, y: null };
+                isStopped = false;
+            }
+            canvasCtx.restore();
+        }
+
+        function showSlide(index) {
+            if (index >= carouselItems.length) {
+                carouselIndex = 0;
+            } else if (index < 0) {
+                carouselIndex = carouselItems.length - 1;
+            } else {
+                carouselIndex = index;
+            }
+            carouselInner.style.transform = `translateX(-${carouselIndex * 100}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(carouselIndex + 1);
+        }
+
+        function prevSlide() {
+            showSlide(carouselIndex - 1);
+        }
+    </script>
+</body>
+</html>
